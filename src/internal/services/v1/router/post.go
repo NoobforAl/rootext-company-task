@@ -13,11 +13,4 @@ func setupPostsRouter(g *echo.Group) {
 
 	g.GET("/posts/:id/up", emttp)
 	g.GET("/posts/:id/down", emttp)
-
-	g.GET("/posts/:id/comments/", emttp)
-	g.POST("/posts/:id/comments/", emttp)
-
-	g.GET("/posts/:id/comments/:comment_id", emttp)
-	g.PUT("/posts/:id/comments/:comment_id", emttp)
-	g.DELETE("/posts/:id/comments/:comment_id", emttp)
 }
