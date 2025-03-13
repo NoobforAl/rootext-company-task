@@ -1,0 +1,41 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "database/query/query.sql"
+    schema: "database/schema/schema.sql"
+    database:
+      uri: "postgresql://postgres:postgres@localhost:5432/postgres"
+    gen:
+      go:
+        package: "database"
+        out: "database"
+        sql_package: "pgx/v5"
+
+    rules:
+      - postgresql-function-with-trigger
+      - postgresql-check-after-insert-trigger
+      - postgresql-check-before-update-trigger
+      - postgresql-check-update-in-trigger-function
+      - postgresql-check-updated-at-in-trigger-function
+
+
+rules:
+  - name: postgresql-function-with-trigger
+    message: "Ensure functions with triggers are properly defined"
+    rule: "postgresql.function.name == 'update_post_rating_summary' || postgresql.function.name == 'update_updated_at_column'"
+
+  - name: postgresql-check-after-insert-trigger
+    message: "Ensure 'AFTER INSERT' is used for post_rating_summary trigger"
+    rule: "postgresql.trigger.event == 'AFTER INSERT' && postgresql.trigger.table == 'rating'"
+
+  - name: postgresql-check-before-update-trigger
+    message: "Ensure 'BEFORE UPDATE' triggers are used for auto-updating columns"
+    rule: "postgresql.trigger.event == 'BEFORE UPDATE' && (postgresql.trigger.table == 'user_info' || postgresql.trigger.table == 'post' || postgresql.trigger.table == 'tag' || postgresql.trigger.table == 'post_tag' || postgresql.trigger.table == 'rating')"
+
+  - name: postgresql-check-update-in-trigger-function
+    message: "Ensure 'UPDATE' is done correctly in trigger functions"
+    rule: "has(postgresql.function.body) && contains(postgresql.function.body, 'UPDATE post_rating_summary')"
+
+  - name: postgresql-check-updated-at-in-trigger-function
+    message: "Ensure 'updated_at' column is set in auto-updating triggers"
+    rule: "has(postgresql.function.body) && contains(postgresql.function.body, 'NEW.updated_at = CURRENT_TIMESTAMP')"

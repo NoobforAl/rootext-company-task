@@ -1,0 +1,27 @@
+{
+	"name": "serviceDev",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"mounts": [
+		"type=bind,source=${localWorkspaceFolder},target=/work",
+		"type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly",
+		"type=bind,source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,readonly",
+		"type=bind,source=${localEnv:HOME}/.tmux.conf,target=/root/.tmux.conf,readonly",
+		"type=bind,source=${localEnv:HOME}/.tmux,target=/root/.tmux,readonly",
+		"type=bind,source=${localEnv:HOME}/.aws,target=/root/.aws,readonly"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/go:1.3.1": {
+			"version": "1.23"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2.12.0": {
+			"version": "latest",
+			"moby": true
+		},
+		"ghcr.io/itsmechlark/features/postgresql:1": {
+			"version": "17"
+		},
+		"ghcr.io/itsmechlark/features/redis-server:1": {
+			"version": "7"
+		}
+	}
+}
