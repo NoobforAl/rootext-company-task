@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "c9495776-4a25-47d7-aa26-01a196ca6fc0",
+		"name": "Rootext Company Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30256855"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/v1/users/?page&size",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjQ3NjV9.dWj8qd0OKiK0fq-Am_UkK0XC_bfeG-Cl7gzaSiAnzrY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"name": "cache-control",
+								"type": "text"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "<calculated when request is sent>",
+								"name": "postman-token",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"name": "content-type",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "<calculated when request is sent>",
+								"name": "content-length",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "<calculated when request is sent>",
+								"name": "host",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.39.1",
+								"name": "user-agent",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"name": "accept",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"name": "accept-encoding",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"name": "connection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/users/userInfo",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"userInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test123456\",\r\n    \"password\": \"test123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/users/login",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test123456\",\r\n    \"first_name\": \"test f\",\r\n    \"last_name\": \"test l\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/users/register",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjM3NDR9.rebrQhGt9dp-VQVvJOC0ZwNOonaVgrb-oB_qmeetTnw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"name": "cache-control",
+								"type": "text"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "<calculated when request is sent>",
+								"name": "postman-token",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"name": "content-type",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "<calculated when request is sent>",
+								"name": "content-length",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "<calculated when request is sent>",
+								"name": "host",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.39.1",
+								"name": "user-agent",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"name": "accept",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"name": "accept-encoding",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"name": "connection",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"test f\",\r\n    \"last_name\": \"test l\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/users/",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Self Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjM3NDR9.rebrQhGt9dp-VQVvJOC0ZwNOonaVgrb-oB_qmeetTnw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Cache-Control",
+								"value": "no-cache",
+								"name": "cache-control",
+								"type": "text"
+							},
+							{
+								"key": "Postman-Token",
+								"value": "<calculated when request is sent>",
+								"name": "postman-token",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"name": "content-type",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "<calculated when request is sent>",
+								"name": "content-length",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "<calculated when request is sent>",
+								"name": "host",
+								"type": "text"
+							},
+							{
+								"key": "User-Agent",
+								"value": "PostmanRuntime/7.39.1",
+								"name": "user-agent",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"name": "accept",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br",
+								"name": "accept-encoding",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive",
+								"name": "connection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/users/",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Get Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/?page=1&size=5",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts With  Filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/filter?page=1&size=5&timeInterval=1h",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "timeInterval",
+									"value": "1h"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5Njk3MTF9.MFFf_hbYysYoT1aBB57TASRNCeH7DwY6O3aJk-1hrJ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post By Id Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjkyMzl9.vc8pIB_hS4p0fl7kSIlPMa36BQ6yz8Wdr4I6uE90epc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id/up",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id",
+								"up"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post By Id Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjkyMzl9.vc8pIB_hS4p0fl7kSIlPMa36BQ6yz8Wdr4I6uE90epc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id/down",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id",
+								"down"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post By Id Copy 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjkyMzl9.vc8pIB_hS4p0fl7kSIlPMa36BQ6yz8Wdr4I6uE90epc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id/removeRate",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id",
+								"removeRate"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjkyMzl9.vc8pIB_hS4p0fl7kSIlPMa36BQ6yz8Wdr4I6uE90epc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"testsss\",\r\n    \"content\": \"this is a content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjkyMzl9.vc8pIB_hS4p0fl7kSIlPMa36BQ6yz8Wdr4I6uE90epc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"testsss123123\",\r\n    \"content\": \"this is a content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5Njk3MTF9.MFFf_hbYysYoT1aBB57TASRNCeH7DwY6O3aJk-1hrJ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/posts/:id",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "New request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_ADDR}}/api/v1/tags",
+							"host": [
+								"{{HOST_ADDR}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MTIzNDU2Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3NDE5NjM3NDR9.rebrQhGt9dp-VQVvJOC0ZwNOonaVgrb-oB_qmeetTnw",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "HOST_ADDR",
+			"value": "127.0.0.1:8080",
+			"type": "string"
+		}
+	]
+}
