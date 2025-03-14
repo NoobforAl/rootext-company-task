@@ -1,4 +1,4 @@
-# rootext-company-tack
+# Rootext Company Tack
 
 
 ## Task Discription
@@ -27,3 +27,8 @@
 
 6️⃣ API documentation with Swagger or Postman Collection  
     - APIs should be fully documented on how they work.  
+
+
+### How run it ?
+
+First, install the Makefile and run `make prod`. This command will run Docker Compose. Then, import the Postman JSON file from the `doc` folder into Postman and send requests to the API.
