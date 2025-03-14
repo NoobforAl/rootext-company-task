@@ -189,19 +189,32 @@ func (q *Queries) DeleteUser(ctx context.Context, id int32) error {
 
 const getAllPosts = `-- name: GetAllPosts :many
 
-SELECT id, user_id, title, content, created_at, updated_at FROM post
+SELECT p.id, p.user_id, p.title, p.content, p.created_at, p.updated_at, COALESCE(prs.total_rating, 0) AS total_rating
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id
 `
 
+type GetAllPostsRow struct {
+	ID          int32
+	UserID      int32
+	Title       string
+	Content     string
+	CreatedAt   pgtype.Timestamp
+	UpdatedAt   pgtype.Timestamp
+	TotalRating int32
+}
+
 // - Posts queries -------------------------------------
-func (q *Queries) GetAllPosts(ctx context.Context) ([]Post, error) {
+func (q *Queries) GetAllPosts(ctx context.Context) ([]GetAllPostsRow, error) {
 	rows, err := q.db.Query(ctx, getAllPosts)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Post
+	var items []GetAllPostsRow
 	for rows.Next() {
-		var i Post
+		var i GetAllPostsRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.UserID,
@@ -209,6 +222,7 @@ func (q *Queries) GetAllPosts(ctx context.Context) ([]Post, error) {
 			&i.Content,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.TotalRating,
 		); err != nil {
 			return nil, err
 		}
@@ -221,34 +235,42 @@ func (q *Queries) GetAllPosts(ctx context.Context) ([]Post, error) {
 }
 
 const getAllPostsWithPagination = `-- name: GetAllPostsWithPagination :many
-SELECT id, user_id, title, content, created_at, updated_at, COUNT(*) OVER() AS total_count, CEIL(COUNT(*) OVER() / $2::float) AS max_page_id, $2 AS page_size
-FROM post
-WHERE
-    user_id = $1
-ORDER BY created_at DESC
-LIMIT $2 OFFSET $3
+SELECT
+    p.id, p.user_id, p.title, p.content, p.created_at, p.updated_at,
+    COALESCE(prs.total_rating, 0) AS total_rating,
+    COUNT(*) OVER () AS total_count,
+    CEIL(COUNT(*) OVER () / $1::float) AS max_page_id,
+    $1 AS page_size
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id
+ORDER BY p.created_at DESC
+LIMIT $2
+OFFSET
+    $3
 `
 
 type GetAllPostsWithPaginationParams struct {
-	UserID int32
-	Limit  float64
-	Offset int64
+	Column1 float64
+	Limit   int64
+	Offset  int64
 }
 
 type GetAllPostsWithPaginationRow struct {
-	ID         int32
-	UserID     int32
-	Title      string
-	Content    string
-	CreatedAt  pgtype.Timestamp
-	UpdatedAt  pgtype.Timestamp
-	TotalCount int64
-	MaxPageID  float64
-	PageSize   pgtype.Float8
+	ID          int32
+	UserID      int32
+	Title       string
+	Content     string
+	CreatedAt   pgtype.Timestamp
+	UpdatedAt   pgtype.Timestamp
+	TotalRating int32
+	TotalCount  int64
+	MaxPageID   float64
+	PageSize    pgtype.Float8
 }
 
 func (q *Queries) GetAllPostsWithPagination(ctx context.Context, arg GetAllPostsWithPaginationParams) ([]GetAllPostsWithPaginationRow, error) {
-	rows, err := q.db.Query(ctx, getAllPostsWithPagination, arg.UserID, arg.Limit, arg.Offset)
+	rows, err := q.db.Query(ctx, getAllPostsWithPagination, arg.Column1, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -263,6 +285,7 @@ func (q *Queries) GetAllPostsWithPagination(ctx context.Context, arg GetAllPosts
 			&i.Content,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.TotalRating,
 			&i.TotalCount,
 			&i.MaxPageID,
 			&i.PageSize,
@@ -523,12 +546,28 @@ func (q *Queries) GetAllUsersWithPagination(ctx context.Context, arg GetAllUsers
 }
 
 const getPostByID = `-- name: GetPostByID :one
-SELECT id, user_id, title, content, created_at, updated_at FROM post WHERE id = $1 LIMIT 1
+SELECT p.id, p.user_id, p.title, p.content, p.created_at, p.updated_at, COALESCE(prs.total_rating, 0) AS total_rating
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id
+WHERE
+    p.id = $1
+LIMIT 1
 `
 
-func (q *Queries) GetPostByID(ctx context.Context, id int32) (Post, error) {
+type GetPostByIDRow struct {
+	ID          int32
+	UserID      int32
+	Title       string
+	Content     string
+	CreatedAt   pgtype.Timestamp
+	UpdatedAt   pgtype.Timestamp
+	TotalRating int32
+}
+
+func (q *Queries) GetPostByID(ctx context.Context, id int32) (GetPostByIDRow, error) {
 	row := q.db.QueryRow(ctx, getPostByID, id)
-	var i Post
+	var i GetPostByIDRow
 	err := row.Scan(
 		&i.ID,
 		&i.UserID,
@@ -536,6 +575,7 @@ func (q *Queries) GetPostByID(ctx context.Context, id int32) (Post, error) {
 		&i.Content,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.TotalRating,
 	)
 	return i, err
 }

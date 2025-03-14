@@ -58,18 +58,34 @@ DELETE FROM user_info WHERE id = $1;
 --- Posts queries -------------------------------------
 
 -- name: GetAllPosts :many
-SELECT * FROM post;
+SELECT p.*, COALESCE(prs.total_rating, 0) AS total_rating
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id;
 
 -- name: GetPostByID :one
-SELECT * FROM post WHERE id = $1 LIMIT 1;
+SELECT p.*, COALESCE(prs.total_rating, 0) AS total_rating
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id
+WHERE
+    p.id = $1
+LIMIT 1;
 
 -- name: GetAllPostsWithPagination :many
-SELECT *, COUNT(*) OVER() AS total_count, CEIL(COUNT(*) OVER() / $2::float) AS max_page_id, $2 AS page_size
-FROM post
-WHERE
-    user_id = $1
-ORDER BY created_at DESC
-LIMIT $2 OFFSET $3;
+SELECT
+    p.*,
+    COALESCE(prs.total_rating, 0) AS total_rating,
+    COUNT(*) OVER () AS total_count,
+    CEIL(COUNT(*) OVER () / $1::float) AS max_page_id,
+    $1 AS page_size
+FROM
+    post p
+    LEFT JOIN post_rating_summary prs ON p.id = prs.post_id
+ORDER BY p.created_at DESC
+LIMIT $2
+OFFSET
+    $3;
 
 
 -- name: CreatePost :one

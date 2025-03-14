@@ -9,6 +9,7 @@ type Post struct {
 	UserID    int32
 	Title     string
 	Content   string
+	RateScore int32
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

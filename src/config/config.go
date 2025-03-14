@@ -47,11 +47,11 @@ func getEnvOrDefault(key, defaultValue string) string {
 
 func replaceEnvVars(input string) string {
 	replacer := strings.NewReplacer(
-		"${DB_NAME}", getEnvOrDefault("DB_NAME", ""),
+		"${DB_NAME}", getEnvOrDefault("DB_NAME", "postgres"),
 		"${DB_HOST}", getEnvOrDefault("DB_HOST", "localhost"),
 		"${DB_PORT}", getEnvOrDefault("DB_PORT", "5432"),
-		"${DB_USER}", getEnvOrDefault("DB_USER", "root"),
-		"${DB_PASSWORD}", getEnvOrDefault("DB_PASSWORD", "password"),
+		"${DB_USER}", getEnvOrDefault("DB_USER", "postgres"),
+		"${DB_PASSWORD}", getEnvOrDefault("DB_PASSWORD", "postgres"),
 
 		"${JWT_SECRET}", getEnvOrDefault("JWT_SECRET", "jdfseiowjrwe234_please_change_me"),
 		"${JWT_EXPIRATION}", getEnvOrDefault("JWT_EXPIRATION", "3600s"),

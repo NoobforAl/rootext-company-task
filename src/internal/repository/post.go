@@ -4,6 +4,7 @@ import (
 	"context"
 	"ratblog/internal/database"
 	"ratblog/internal/entity"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -21,6 +22,7 @@ func (r *repository) GetAllPosts(ctx context.Context) ([]*entity.Post, error) {
 			UserID:    post.UserID,
 			Title:     post.Title,
 			Content:   post.Content,
+			RateScore: post.TotalRating,
 			CreatedAt: post.CreatedAt.Time,
 			UpdatedAt: post.UpdatedAt.Time,
 		})
@@ -39,6 +41,7 @@ func (r *repository) GetPostByID(ctx context.Context, id int) (*entity.Post, err
 		UserID:    post.UserID,
 		Title:     post.Title,
 		Content:   post.Content,
+		RateScore: post.TotalRating,
 		CreatedAt: post.CreatedAt.Time,
 		UpdatedAt: post.UpdatedAt.Time,
 	}, nil
@@ -47,8 +50,9 @@ func (r *repository) GetPostByID(ctx context.Context, id int) (*entity.Post, err
 func (r *repository) GetAllPostsWithPagination(ctx context.Context, page, limit int) (*entity.SliceOfPost, error) {
 	offset := (page - 1) * limit
 	params := database.GetAllPostsWithPaginationParams{
-		Offset: int64(offset),
-		Limit:  float64(limit),
+		Column1: float64(limit),
+		Offset:  int64(offset),
+		Limit:   int64(limit),
 	}
 
 	posts, err := r.db.GetAllPostsWithPagination(ctx, params)
@@ -63,6 +67,7 @@ func (r *repository) GetAllPostsWithPagination(ctx context.Context, page, limit 
 			UserID:    post.UserID,
 			Title:     post.Title,
 			Content:   post.Content,
+			RateScore: post.TotalRating,
 			CreatedAt: post.CreatedAt.Time,
 			UpdatedAt: post.UpdatedAt.Time,
 		})
@@ -83,10 +88,12 @@ func (r *repository) GetAllPostsWithPagination(ctx context.Context, page, limit 
 
 func (r *repository) GetTopPostsInPeriodWithPagination(ctx context.Context, period string, page, limit int) (*entity.SliceOfPost, error) {
 	offset := (page - 1) * limit
-	interval := pgtype.Interval{}
-	err := interval.Scan(period)
-	if err != nil {
-		return nil, err
+
+	// pars period string 1h or 1m or 1s to microseconds
+	timePeriod, _ := time.ParseDuration(period)
+	interval := pgtype.Interval{
+		Microseconds: int64(timePeriod / time.Microsecond),
+		Valid:        true,
 	}
 
 	params := database.GetTopPostsInPeriodWithPaginationParams{
@@ -107,6 +114,7 @@ func (r *repository) GetTopPostsInPeriodWithPagination(ctx context.Context, peri
 			UserID:    post.UserID,
 			Title:     post.Title,
 			Content:   post.Content,
+			RateScore: post.TotalRating.Int32,
 			CreatedAt: post.CreatedAt.Time,
 			UpdatedAt: post.UpdatedAt.Time,
 		})
@@ -172,6 +180,7 @@ func (r *repository) GetAllUserRatedPostsWithPagination(ctx context.Context, use
 			UserID:    post.UserID,
 			Title:     post.Title,
 			Content:   post.Content,
+			RateScore: post.RatingValue,
 			CreatedAt: post.CreatedAt.Time,
 			UpdatedAt: post.UpdatedAt.Time,
 		})

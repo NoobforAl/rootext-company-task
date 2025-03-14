@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS post (
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user_info (id)
+    FOREIGN KEY (user_id) REFERENCES user_info (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tag (
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS post_tag (
     post_id INTEGER NOT NULL,
     tag_id INTEGER NOT NULL,
     PRIMARY KEY (post_id, tag_id),
-    FOREIGN KEY (post_id) REFERENCES post (id)
+    FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS rating (
@@ -41,15 +41,15 @@ CREATE TABLE IF NOT EXISTS rating (
     rating_value INTEGER NOT NULL CHECK (rating_value IN (-1, 1)),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_id) REFERENCES post (id),
-    FOREIGN KEY (user_id) REFERENCES user_info (id),
+    FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_info (id) ON DELETE CASCADE,
     UNIQUE (post_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS post_rating_summary (
     post_id INTEGER PRIMARY KEY,
     total_rating INTEGER DEFAULT 0,
-    FOREIGN KEY (post_id) REFERENCES post (id)
+    FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE
 );
 
 
