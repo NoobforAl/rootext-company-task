@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"ratblog/database"
+	"ratblog/internal/database"
 	"ratblog/internal/entity"
 )
 

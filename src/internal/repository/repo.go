@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"ratblog/contract"
-	"ratblog/database"
+	"ratblog/internal/database"
 
 	"github.com/jackc/pgx/v5"
 )

@@ -9,8 +9,8 @@ POSTGRES_SQL_USER ?= postgres
 POSTGRES_SQL_PASSWORD ?= postgres
 POSTGRES_SQL_DATABASE_NAME ?= postgres
 
-MIGRATIONS_DIR = src/database/migrations
-SCHEMA_FILE = src/database/schema/schema.sql
+MIGRATIONS_DIR = src/internal/database/migrations
+SCHEMA_FILE = src/internal/database/schema/schema.sql
 
 # Check if go-migrate is installed, otherwise install it
 install_go_migration_if_not_installed:

@@ -1,8 +1,8 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    queries: "database/query/query.sql"
-    schema: "database/schema/schema.sql"
+    queries: "internal/database/query/query.sql"
+    schema: "internal/database/schema/schema.sql"
     database:
       uri: "postgresql://postgres:postgres@localhost:5432/postgres"
     gen:
