@@ -12,4 +12,6 @@ type User interface {
 	CreateUser(ctx context.Context, user *entity.User) error
 	UpdateUser(ctx context.Context, user *entity.User) error
 	DeleteUser(ctx context.Context, id int) error
+
+	CheckUserExistWithUsernamePassword(ctx context.Context, userName, password string) (*entity.User, error)
 }

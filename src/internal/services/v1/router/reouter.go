@@ -10,5 +10,5 @@ func SetupRouter(e *echo.Echo) {
 	setupUsersRouter(eg)
 	setupPostsRouter(eg)
 
-	e.GET("/v1/health", ttt)
+	eg.GET("/health", ttt)
 }

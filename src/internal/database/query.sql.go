@@ -11,6 +11,37 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const checkUserExistWithUsernamePassword = `-- name: CheckUserExistWithUsernamePassword :one
+SELECT id, email, username, first_name, last_name, role, password, created_at, updated_at
+FROM user_info
+WHERE
+    username = $1
+    AND password = encode (digest ($2, 'sha256'), 'hex')
+LIMIT 1
+`
+
+type CheckUserExistWithUsernamePasswordParams struct {
+	Username string
+	Digest   string
+}
+
+func (q *Queries) CheckUserExistWithUsernamePassword(ctx context.Context, arg CheckUserExistWithUsernamePasswordParams) (UserInfo, error) {
+	row := q.db.QueryRow(ctx, checkUserExistWithUsernamePassword, arg.Username, arg.Digest)
+	var i UserInfo
+	err := row.Scan(
+		&i.ID,
+		&i.Email,
+		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.Role,
+		&i.Password,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const createPost = `-- name: CreatePost :one
 INSERT INTO post (user_id, title, content) 
 VALUES ($1, $2, $3) 

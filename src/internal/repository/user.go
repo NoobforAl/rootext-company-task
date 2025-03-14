@@ -112,3 +112,27 @@ func (r *repository) UpdateUser(ctx context.Context, user *entity.User) error {
 func (r *repository) DeleteUser(ctx context.Context, id int) error {
 	return r.db.DeleteUser(ctx, int32(id))
 }
+
+func (r *repository) CheckUserExistWithUsernamePassword(ctx context.Context, userName, password string) (*entity.User, error) {
+	raw, err := r.db.CheckUserExistWithUsernamePassword(
+		ctx, database.CheckUserExistWithUsernamePasswordParams{
+			Username: userName,
+			Digest:   password,
+		},
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &entity.User{
+		ID:        raw.ID,
+		Email:     raw.Email,
+		Username:  raw.Username,
+		FirstName: raw.FirstName,
+		LastName:  raw.LastName,
+		Role:      raw.Role,
+		CreatedAt: raw.CreatedAt.Time,
+		UpdatedAt: raw.UpdatedAt.Time,
+	}, nil
+}

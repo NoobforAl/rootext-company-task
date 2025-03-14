@@ -6,6 +6,14 @@ SELECT * FROM user_info;
 -- name: GetUserByID :one
 SELECT * FROM user_info WHERE id = $1 LIMIT 1;
 
+-- name: CheckUserExistWithUsernamePassword :one
+SELECT *
+FROM user_info
+WHERE
+    username = $1
+    AND password = encode (digest ($2, 'sha256'), 'hex')
+LIMIT 1;
+
 -- name: GetAllUsersWithPagination :many
 SELECT *, COUNT(*) OVER() AS total_count, CEIL(COUNT(*) OVER() / $2::float) AS max_page_id, $2 AS page_size
 FROM user_info 

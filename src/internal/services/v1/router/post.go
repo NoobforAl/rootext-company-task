@@ -13,4 +13,5 @@ func setupPostsRouter(g *echo.Group) {
 
 	g.GET("/posts/:id/up", emttp)
 	g.GET("/posts/:id/down", emttp)
+	g.GET("/posts/:id/removeRate", emttp)
 }
